@@ -8,14 +8,20 @@ class User(db.Model):
 	password = db.Column(db.Unicode(1024))
 	posts = db.relationship('Post')
 
+	def __init__(self, name, email, password):
+		self.name = name
+		self.email = email
+		self.password = password
+
 	@staticmethod
 	def create_user(name, email,password):
 		try:
 			#check e-mail is not occupied
-			u = User()
-	 		u.name = name
-			u.email = email
-			u.password = password
+			if User.get_user(email):
+				# occupied
+				print "its occupied"
+				return False
+			u = User(name,email,password)
 			db.session.add(u)
 			db.session.commit()
 			return True
@@ -25,11 +31,18 @@ class User(db.Model):
 		return False
 
 	@staticmethod
-	def check_user(email, password):
-		u = User.query.filter_by(email=email, password=password).first()
-		if u:
-			return True
+	def get_user(email):
+		# checks for the existence of a unique e-mail in db
+		q = User.query.filter_by(email=email)
+		count = q.count()
+		if count == 1:
+			return q.first()
+		elif count > 1:
+			print "internal error. multiple occurences of user %s" %email
+			return False
 		return False
+
+
 
 
 class Post(db.Model):
