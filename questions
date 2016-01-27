@@ -1,0 +1,13 @@
+- sending data via post is now arriving at request.form. it used to be request.args and most examples show request.json.
+
+- what does FL.flash() do?
+
+-redirect(url_for('posts')) returns the html code instead of redirecting
+
+- where does the user object "current_user" come from?
+
+- does authentication is User properties refer to the account being verified ( as in a 1 time verification) or rather the account being authenticated right now for usage?
+
+- why do we need to import modules back into __init__.py ?
+
+- how does the site know i am me when i access a url? logging in from android

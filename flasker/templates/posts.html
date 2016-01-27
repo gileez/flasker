@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+{% block body %}
+{% if current_user.is_authenticated %}
+  Hi {{ current_user.name }}!
+{% endif %}
+  <ul>
+  {% for post in posts %}
+    <li><h2>{{ post.__dict__ }}:</h2>{{ post.text }},{{post.id}}
+  {% endfor %}
+  </ul>
+{% endblock %}
